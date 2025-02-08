@@ -13,21 +13,11 @@ class PseudocodeCommand extends AbstractPseudocodeGenerateCommand
         OutputInterface $output
     ): int
     {
-        $pseudocodeDir = $input->getArgument('pseudocodeDir');
-        $outputDir = $input->getArgument('outputDir');
-        $format = $input->getOption('format');
-        $symfonyVersion = $input->getOption('symfony-version');
+        $pseudocodeDir = $input->getArgument('pseudocode-dir');
 
-        // TODO:
-        // 1. Load and validate pseudocode files
-        // 2. Create Symfony project structure:
-        //    - Generate controllers from endpoints
-        //    - Generate entities from data models
-        //    - Generate services from business logic
-        //    - Generate tests
-        // 3. Set up proper namespaces and autoloading
-        // 4. Generate composer.json with required dependencies
-        // 5. Generate configuration files (services.yaml, routes.yaml, etc.)
+        // TODO: Generate pseudocode from the symfony project.
+        // - Explore the Entity directory to find entities
+        // - Fill the outputDir with generated pseudocode based on found files.
 
         $output->writeln('TODO: Implement pseudocode to Symfony project conversion');
 

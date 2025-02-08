@@ -13,18 +13,13 @@ class CodeCommand extends AbstractPseudocodeGenerateCommand
         OutputInterface $output
     ): int
     {
-        $projectDir = $input->getArgument('projectDir');
-        $outputDir = $input->getArgument('outputDir');
-        $format = $input->getOption('format');
+        $pseudocodeDir = $input->getArgument('pseudocode-dir');
 
-        // TODO:
-        // 1. Scan project directory for PHP files
-        // 2. For each file:
-        //    - Parse the PHP code
-        //    - Extract Symfony-specific elements (controllers, entities, services, etc.)
-        //    - Convert to pseudocode
-        // 3. Generate output files in the specified format
-        // 4. Generate a manifest file listing all converted files
+        $output->writeln($pseudocodeDir);
+
+        // TODO: Generate code from the pseudocode dir.
+        // - Explore the Entity directory to find entities
+        // - Fill the outputDir with generated pseudocode based on found files.
 
         $output->writeln('TODO: Implement project conversion to pseudocode');
 
