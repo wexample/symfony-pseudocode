@@ -3,7 +3,7 @@
     "description": "A basic PHP package",
     "type": "library",
     "license": "MIT",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "authors": [
         {
             "name": "Wexample",
@@ -13,7 +13,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.4",
-        "wexample/pseudocode": "^0.0.1"
+        "wexample/pseudocode": "^0.0.3"
     },
     "autoload": {
         "psr-4": {
