@@ -1,13 +1,17 @@
 items:
   - type: class
     name: TestMinimalEntity
-    description: "A Symfony entity that only contains an id in a flat notation"
+    description: 'A Symfony entity that only contains an id in a flat notation'
     properties:
       - name: id
-        type: int
-        default: 0
-        description: "Stores the result of the last operation performed."
+        type: int|null
+        default: null
+        description: 'The identifier of the entity.'
         database:
           nullable: false
           primary: true
           auto_increment: true
+    methods:
+      - name: getId
+        description: 'Returns the unique id of the entity instance.'
+        returnType: int|null
