@@ -5,11 +5,14 @@ namespace Wexample\SymfonyPseudocode\Tests\Service;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Wexample\Pseudocode\Testing\Traits\WithYamlTestCase;
 use Wexample\SymfonyPseudocode\Service\PseudocodeService;
 
 class PseudocodeServiceTest extends TestCase
 {
     private ?PseudocodeService $pseudocodeService = null;
+    use WithYamlTestCase;
+
     private string $tempTestDir;
     private string $fixturesDir;
     private string $sourceDir;
@@ -41,20 +44,19 @@ class PseudocodeServiceTest extends TestCase
     {
         // Process the test entities and repositories
         $files = $this->pseudocodeService->process($this->tempTestDir, $this->sourceDir);
-        
+
         $this->assertNotEmpty($files, 'The service should have produced files.');
-        
+
         // Verify the generated files match expected output
         foreach ($files as $file) {
             $relativePath = basename($file);
             $type = str_contains(strtolower($relativePath), 'repository') ? 'repository' : 'entity';
             $expectedFile = $this->expectedDir . '/' . $type . '/' . $relativePath;
-            
-            $this->assertFileExists($expectedFile, 'Expected file should exist: ' . $relativePath);
-            $this->assertFileEquals(
+
+            $this->assertYamlFilesEqual(
                 $expectedFile,
                 $file,
-                'Generated file should match expected content: ' . $relativePath
+                "Generated pseudocode does not match"
             );
         }
     }

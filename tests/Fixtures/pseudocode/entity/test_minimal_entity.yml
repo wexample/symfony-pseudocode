@@ -1,6 +1,6 @@
 items:
-  - name: TestMinimalEntity
-    type: class
+  - type: class
+    name: TestMinimalEntity
     description: 'A Symfony entity that only contains an id in a flat notation'
     properties:
       - name: id
