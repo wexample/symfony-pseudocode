@@ -16,7 +16,8 @@ class PseudocodeCommand extends AbstractPseudocodeGenerateCommand
     public function __construct(
         protected BundleService $bundleService,
         protected KernelInterface $kernel
-    ) {
+    )
+    {
         parent::__construct($bundleService);
         $this->pseudocodeService = new PseudocodeService($kernel, $bundleService);
     }
@@ -24,8 +25,11 @@ class PseudocodeCommand extends AbstractPseudocodeGenerateCommand
     protected function execute(
         InputInterface $input,
         OutputInterface $output
-    ): int {
-        $this->pseudocodeService->process();
+    ): int
+    {
+        $this->pseudocodeService->process(
+            $this->kernel->getProjectDir() . '/' . $input->getArgument('pseudocode-dir') . '/'
+        );
 
         return Command::SUCCESS;
     }

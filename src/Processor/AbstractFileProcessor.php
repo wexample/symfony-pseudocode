@@ -4,12 +4,15 @@ namespace Wexample\SymfonyPseudocode\Processor;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Wexample\Pseudocode\Generator\PseudocodeGenerator;
 
 abstract class AbstractFileProcessor
 {
     public function __construct(
-        protected KernelInterface $kernel
-    ) {
+        protected KernelInterface $kernel,
+        protected PseudocodeGenerator $pseudocodeGenerator
+    )
+    {
     }
 
     abstract protected function getSourceDirectory(): string;
@@ -19,7 +22,7 @@ abstract class AbstractFileProcessor
         return '*.php';
     }
 
-    public function process(): void
+    public function process(string $pseudocodeRootDir): void
     {
         $finder = new Finder();
         $finder->files()
@@ -30,18 +33,14 @@ abstract class AbstractFileProcessor
             return;
         }
 
+        $projectDir = $this->kernel->getProjectDir();
         foreach ($finder as $file) {
-            $this->processFile($file);
+            $this->pseudocodeGenerator->generateFromFileAndSave(
+                $file,
+                $projectDir . '/',
+                $pseudocodeRootDir,
+            );
         }
-    }
-
-    protected function processFile($file): void
-    {
-        echo sprintf(
-            "Processing %s file: %s\n",
-            $this->getProcessorName(),
-            $file->getRelativePathname()
-        );
     }
 
     abstract protected function getProcessorName(): string;
