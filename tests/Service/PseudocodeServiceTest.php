@@ -1,12 +1,12 @@
 <?php
 
-namespace Wexample\SymfonyPseudocode\Tests;
+namespace Wexample\SymfonyPseudocode\Tests\Service;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Wexample\SymfonyPseudocode\Service\PseudocodeService;
 
-class SymfonyEntityTest extends KernelTestCase
+class PseudocodeServiceTest extends KernelTestCase
 {
     private ?PseudocodeService $pseudocodeService = null;
     private string $tempTestDir;
