@@ -17,7 +17,7 @@ class PseudocodeServiceTest extends TestCase
     protected function setUp(): void
     {
         $this->fixturesDir = __DIR__ . '/../Fixtures';
-        $this->sourceDir = $this->fixturesDir . '/Classes';
+        $this->sourceDir = $this->fixturesDir;
         $this->tempTestDir = sys_get_temp_dir() . '/pseudocode_test_' . uniqid();
 
         // Create test directory
@@ -45,7 +45,9 @@ class PseudocodeServiceTest extends TestCase
         // Verify the generated files match expected output
         foreach ($files as $file) {
             $relativePath = basename($file);
-            $expectedFile = $this->fixturesDir . '/expected/' . $relativePath;
+            // Convert underscores to hyphens for comparison
+            $expectedPath = str_replace('_', '-', $relativePath);
+            $expectedFile = $this->fixturesDir . '/expected/' . $expectedPath;
             
             $this->assertFileExists($expectedFile, 'Expected file should exist: ' . $relativePath);
             $this->assertFileEquals(
