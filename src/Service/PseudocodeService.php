@@ -28,8 +28,8 @@ class PseudocodeService
     public function process(string $pseudocodeDir): array
     {
         $files = [];
-        array_merge($files, $this->entityProcessor->process($pseudocodeDir));
-        array_merge($files, $this->repositoryProcessor->process($pseudocodeDir));
+        $files = array_merge($files, $this->entityProcessor->process($pseudocodeDir));
+        $files = array_merge($files, $this->repositoryProcessor->process($pseudocodeDir));
 
         return $files;
     }
