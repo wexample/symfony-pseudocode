@@ -13,22 +13,11 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.4",
-        "wexample/pseudocode": "^1.0.2",
-        "wexample/symfony-helpers": "^1.0",
-        "symfony/console": "^6.0",
-        "symfony/http-kernel": "^6.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^9.5"
+        "wexample/pseudocode": "^1.0.2"
     },
     "autoload": {
         "psr-4": {
             "Wexample\\SymfonyPseudocode\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Wexample\\SymfonyPseudocode\\Tests\\": "tests/"
         }
     }
 }

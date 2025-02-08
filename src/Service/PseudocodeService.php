@@ -4,7 +4,6 @@ namespace Wexample\SymfonyPseudocode\Service;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 use Wexample\Pseudocode\Generator\PseudocodeGenerator;
-use Wexample\SymfonyHelpers\Service\BundleService;
 use Wexample\SymfonyPseudocode\Processor\EntityProcessor;
 use Wexample\SymfonyPseudocode\Processor\RepositoryProcessor;
 
@@ -15,7 +14,6 @@ class PseudocodeService
 
     public function __construct(
         protected KernelInterface $kernel,
-        protected BundleService $bundleService,
     )
     {
         $pseudocodeGenerator = new PseudocodeGenerator();
