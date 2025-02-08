@@ -1,12 +1,13 @@
-entity:
-  name: TestEntity
-  properties:
-    id:
-      type: int
-      nullable: true
-      generated: true
-      primary: true
-    name:
-      type: string
-      nullable: true
-      length: 255
+items:
+  - type: class
+    name: TestMinimalEntity
+    description: "A Symfony entity that only contains an id in a flat notation"
+    properties:
+      - name: id
+        type: int
+        default: 0
+        description: "Stores the result of the last operation performed."
+        database:
+          nullable: false
+          primary: true
+          auto_increment: true

@@ -1,12 +1,14 @@
-entity:
-  name: TestEntityRepository
-  properties:
-    id:
-      type: int
-      nullable: true
-      generated: true
-      primary: true
-    name:
-      type: string
-      nullable: true
-      length: 255
+items:
+  - type: class
+    class:
+      extends: \Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository
+    name: TestMinimalEntityRepository
+    description: "A basic Symfony repository",
+    methods:
+      - name:
+        type: class_constructor
+        description: "Calculate the sum of two ints."
+        parameters:
+          - name: registry
+            type: Doctrine\Persistence\ManagerRegistry
+            description: "The first operand."

@@ -12,13 +12,4 @@ class TestMinimalEntityRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, TestMinimalEntity::class);
     }
-
-    public function findByName(string $name)
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.name = :name')
-            ->setParameter('name', $name)
-            ->getQuery()
-            ->getResult();
-    }
 }
