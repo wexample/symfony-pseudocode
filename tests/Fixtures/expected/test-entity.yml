@@ -1,0 +1,22 @@
+entity:
+  name: TestEntity
+  properties:
+    id:
+      type: int
+      nullable: true
+      generated: true
+      primary: true
+    name:
+      type: string
+      nullable: true
+      length: 255
+  methods:
+    getId:
+      return_type: ?int
+    getName:
+      return_type: ?string
+    setName:
+      parameters:
+        name:
+          type: string
+      return_type: self
