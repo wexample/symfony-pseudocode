@@ -21,9 +21,16 @@ class PseudocodeService
         $this->repositoryProcessor = new RepositoryProcessor($kernel, $pseudocodeGenerator);
     }
 
-    public function process(string $pseudocodeDir): void
+    /**
+     * @param string $pseudocodeDir
+     * @return string[]
+     */
+    public function process(string $pseudocodeDir): array
     {
-        $this->entityProcessor->process($pseudocodeDir);
-        $this->repositoryProcessor->process($pseudocodeDir);
+        $files = [];
+        array_merge($files, $this->entityProcessor->process($pseudocodeDir));
+        array_merge($files, $this->repositoryProcessor->process($pseudocodeDir));
+
+        return $files;
     }
 }

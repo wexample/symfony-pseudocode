@@ -22,25 +22,28 @@ abstract class AbstractFileProcessor
         return '*.php';
     }
 
-    public function process(string $pseudocodeRootDir): void
+    /**
+     * @param string $pseudocodeRootDir
+     * @return string[]
+     */
+    public function process(string $pseudocodeRootDir): array
     {
         $finder = new Finder();
         $finder->files()
             ->in($this->getSourceDirectory())
             ->name($this->getFilePattern());
 
-        if (!$finder->hasResults()) {
-            return;
-        }
-
+        $files = [];
         $projectDir = $this->kernel->getProjectDir();
         foreach ($finder as $file) {
-            $this->pseudocodeGenerator->generateFromFileAndSave(
+            $files[] = $this->pseudocodeGenerator->generateFromFileAndSave(
                 $file,
                 $projectDir . '/',
                 $pseudocodeRootDir,
             );
         }
+
+        return $files;
     }
 
     abstract protected function getProcessorName(): string;
