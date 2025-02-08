@@ -3,19 +3,17 @@
 namespace Wexample\SymfonyPseudocode\Processor;
 
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Wexample\Pseudocode\Generator\PseudocodeGenerator;
 
 abstract class AbstractFileProcessor
 {
     public function __construct(
-        protected KernelInterface $kernel,
         protected PseudocodeGenerator $pseudocodeGenerator
     )
     {
     }
 
-    abstract protected function getSourceDirectory(): string;
+    abstract protected function getSourceSubDirectory(): string;
 
     protected function getFilePattern(): string
     {
@@ -23,22 +21,24 @@ abstract class AbstractFileProcessor
     }
 
     /**
-     * @param string $pseudocodeRootDir
+     * @param string $codeDir Directory containing the source code
+     * @param string $pseudocodeRootDir Directory where to generate pseudocode
      * @return string[]
      */
-    public function process(string $pseudocodeRootDir): array
+    public function process(string $codeDir, string $pseudocodeRootDir): array
     {
+        $sourceDir = $codeDir . '/' . $this->getSourceSubDirectory();
+        
         $finder = new Finder();
         $finder->files()
-            ->in($this->getSourceDirectory())
+            ->in($sourceDir)
             ->name($this->getFilePattern());
 
         $files = [];
-        $projectDir = $this->kernel->getProjectDir();
         foreach ($finder as $file) {
             $files[] = $this->pseudocodeGenerator->generateFromFileAndSave(
                 $file,
-                $projectDir . '/',
+                $codeDir . '/',
                 $pseudocodeRootDir,
             );
         }

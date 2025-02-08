@@ -12,18 +12,20 @@ class PseudocodeServiceTest extends TestCase
     private ?PseudocodeService $pseudocodeService = null;
     private string $tempTestDir;
     private string $fixturesDir;
+    private string $sourceDir;
 
     protected function setUp(): void
     {
-        $kernel = $this->createMock(KernelInterface::class);
-        $kernel->method('getProjectDir')
-            ->willReturn(__DIR__ . '/../Fixtures/Classes');
-
-        $this->pseudocodeService = new PseudocodeService($kernel);
-        
         $this->fixturesDir = __DIR__ . '/../Fixtures';
+        $this->sourceDir = $this->fixturesDir . '/Classes';
         $this->tempTestDir = sys_get_temp_dir() . '/pseudocode_test_' . uniqid();
+
+        // Create test directory
         (new Filesystem())->mkdir($this->tempTestDir);
+
+        // Mock kernel - we don't need getProjectDir anymore but service still requires it
+        $kernel = $this->createMock(KernelInterface::class);
+        $this->pseudocodeService = new PseudocodeService($kernel);
     }
 
     protected function tearDown(): void
@@ -35,7 +37,8 @@ class PseudocodeServiceTest extends TestCase
 
     public function testEntityConversion(): void
     {
-        $files = $this->pseudocodeService->process($this->tempTestDir);
+        // Process the test entities and repositories
+        $files = $this->pseudocodeService->process($this->tempTestDir, $this->sourceDir);
         
         $this->assertNotEmpty($files, 'The service should have produced files.');
         

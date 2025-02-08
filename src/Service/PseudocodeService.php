@@ -17,19 +17,22 @@ class PseudocodeService
     )
     {
         $pseudocodeGenerator = new PseudocodeGenerator();
-        $this->entityProcessor = new EntityProcessor($kernel, $pseudocodeGenerator);
-        $this->repositoryProcessor = new RepositoryProcessor($kernel, $pseudocodeGenerator);
+        $this->entityProcessor = new EntityProcessor($pseudocodeGenerator);
+        $this->repositoryProcessor = new RepositoryProcessor($pseudocodeGenerator);
     }
 
     /**
-     * @param string $pseudocodeDir
+     * @param string $pseudocodeDir Directory where to generate pseudocode
+     * @param string|null $codeDir Optional directory containing the source code, defaults to kernel project dir
      * @return string[]
      */
-    public function process(string $pseudocodeDir): array
+    public function process(string $pseudocodeDir, ?string $codeDir = null): array
     {
+        $codeDir = $codeDir ?? $this->kernel->getProjectDir() . '/src';
+        
         $files = [];
-        $files = array_merge($files, $this->entityProcessor->process($pseudocodeDir));
-        $files = array_merge($files, $this->repositoryProcessor->process($pseudocodeDir));
+        $files = array_merge($files, $this->entityProcessor->process($codeDir, $pseudocodeDir));
+        $files = array_merge($files, $this->repositoryProcessor->process($codeDir, $pseudocodeDir));
 
         return $files;
     }
