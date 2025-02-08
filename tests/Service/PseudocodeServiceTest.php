@@ -5,13 +5,14 @@ namespace Wexample\SymfonyPseudocode\Tests\Service;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Wexample\Pseudocode\Testing\Traits\WithYamlTestCase;
+use Wexample\Helpers\Testing\Traits\WithYamlTestCase;
 use Wexample\SymfonyPseudocode\Service\PseudocodeService;
 
 class PseudocodeServiceTest extends TestCase
 {
-    private ?PseudocodeService $pseudocodeService = null;
     use WithYamlTestCase;
+    
+    private ?PseudocodeService $pseudocodeService = null;
 
     private string $tempTestDir;
     private string $fixturesDir;
