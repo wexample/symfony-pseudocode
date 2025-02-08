@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class TestMinimalEntity
 {
     /**
-     * The identifier of the entity.
+     * @var ?int The identifier of the entity.
      */
     #[ORM\Id]
     #[ORM\GeneratedValue]

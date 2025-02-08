@@ -14,4 +14,5 @@ items:
     methods:
       - name: getId
         description: 'Returns the unique id of the entity instance.'
-        returnType: int|null
+        type: function
+        return: int|null

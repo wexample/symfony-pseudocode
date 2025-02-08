@@ -3,4 +3,4 @@ items:
     methods:
       - name: getId
         description: "Returns the id of the entity"
-        returnType: int
+        return: int
