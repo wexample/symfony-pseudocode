@@ -1,0 +1,12 @@
+entity:
+  name: TestEntityRepository
+  properties:
+    id:
+      type: int
+      nullable: true
+      generated: true
+      primary: true
+    name:
+      type: string
+      nullable: true
+      length: 255

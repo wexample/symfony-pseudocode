@@ -1,16 +1,16 @@
 <?php
 
-namespace Wexample\SymfonyPseudocode\Tests\Fixtures\Repository;
+namespace Wexample\SymfonyPseudocode\Tests\Fixtures\Classes\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Wexample\SymfonyPseudocode\Tests\Fixtures\Entity\TestEntity;
+use Wexample\SymfonyPseudocode\Tests\Fixtures\Entity\TestMinimalEntity;
 
-class TestEntityRepository extends ServiceEntityRepository
+class TestMinimalEntityRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, TestEntity::class);
+        parent::__construct($registry, TestMinimalEntity::class);
     }
 
     public function findByName(string $name)
