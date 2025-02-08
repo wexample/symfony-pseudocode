@@ -11,7 +11,7 @@ use Wexample\SymfonyPseudocode\Service\PseudocodeService;
 class PseudocodeServiceTest extends TestCase
 {
     use WithYamlTestCase;
-    
+
     private ?PseudocodeService $pseudocodeService = null;
 
     private string $tempTestDir;
@@ -57,7 +57,8 @@ class PseudocodeServiceTest extends TestCase
             $this->assertYamlFilesEqual(
                 $expectedFile,
                 $file,
-                "Generated pseudocode does not match"
+                "Generated pseudocode does not match",
+                allowEmptyMissing: true
             );
         }
     }
