@@ -1,14 +1,15 @@
 items:
   - type: class
-    class:
-      extends: \Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository
+    # TODO
+    #    class:
+    #      extends: \Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository
     name: TestMinimalEntityRepository
-    description: "A basic Symfony repository",
+    description: "A basic Symfony repository"
     methods:
-      - name:
-        type: class_constructor
-        description: "Calculate the sum of two ints."
+      - name: __construct # TODO Do not set the class constructor name.
+        type: method
+        description: "Class initialization."
         parameters:
           - name: registry
-            type: Doctrine\Persistence\ManagerRegistry
-            description: "The first operand."
+            type: ManagerRegistry # TODO use a pseudocode syntax to refer classes
+            description: "A given service."

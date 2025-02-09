@@ -4,15 +4,16 @@ items:
     description: 'A Symfony entity that only contains an id in a flat notation'
     properties:
       - name: id
-        type: int|null
+        type: int
         default: null
         description: 'The identifier of the entity.'
-        database:
-          nullable: false
-          primary: true
-          auto_increment: true
+        # TODO extract data from Doctrine.
+    #        database:
+    #          nullable: false
+    #          primary: true
+    #          auto_increment: true
     methods:
       - name: getId
         description: 'Returns the unique id of the entity instance.'
-        type: function
-        return: int|null
+        type: method
+        return: int
