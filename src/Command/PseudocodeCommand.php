@@ -19,7 +19,7 @@ class PseudocodeCommand extends AbstractPseudocodeGenerateCommand
     )
     {
         parent::__construct($bundleService);
-        $this->pseudocodeService = new PseudocodeService($kernel, $bundleService);
+        $this->pseudocodeService = new PseudocodeService($kernel);
     }
 
     protected function execute(

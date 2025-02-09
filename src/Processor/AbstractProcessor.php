@@ -3,12 +3,14 @@
 namespace Wexample\SymfonyPseudocode\Processor;
 
 use Symfony\Component\Finder\Finder;
-use Wexample\Pseudocode\Generator\PseudocodeGenerator;
+use Wexample\SymfonyPseudocode\Generator\SymfonyCodeGenerator;
+use Wexample\SymfonyPseudocode\Generator\SymfonyPseudocodeGenerator;
 
-abstract class AbstractFileProcessor
+abstract class AbstractProcessor
 {
     public function __construct(
-        protected PseudocodeGenerator $pseudocodeGenerator
+        protected SymfonyPseudocodeGenerator $pseudocodeGenerator,
+        protected SymfonyCodeGenerator $codeGenerator,
     )
     {
     }
@@ -25,10 +27,13 @@ abstract class AbstractFileProcessor
      * @param string $pseudocodeRootDir Directory where to generate pseudocode
      * @return string[]
      */
-    public function process(string $codeDir, string $pseudocodeRootDir): array
+    public function process(
+        string $codeDir,
+        string $pseudocodeRootDir
+    ): array
     {
         $sourceDir = $codeDir . '/' . $this->getSourceSubDirectory();
-        
+
         $finder = new Finder();
         $finder->files()
             ->in($sourceDir)

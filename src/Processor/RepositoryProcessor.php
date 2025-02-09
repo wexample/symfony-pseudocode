@@ -2,7 +2,7 @@
 
 namespace Wexample\SymfonyPseudocode\Processor;
 
-class RepositoryProcessor extends AbstractFileProcessor
+class RepositoryProcessor extends AbstractProcessor
 {
     protected function getSourceSubDirectory(): string
     {
