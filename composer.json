@@ -3,7 +3,7 @@
     "description": "A basic PHP package",
     "type": "library",
     "license": "MIT",
-    "version": "1.0.17",
+    "version": "1.0.18",
     "authors": [
         {
             "name": "Wexample",
@@ -13,8 +13,8 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.4",
-        "wexample/pseudocode": "^1.0.17",
-        "wexample/symfony-helpers": "^1.0.23"
+        "wexample/pseudocode": "^1.0.18",
+        "wexample/symfony-helpers": "^1.0.24"
     },
     "require-dev": {
         "symfony/http-kernel": "^6.0",
