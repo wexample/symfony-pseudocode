@@ -13,7 +13,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.4",
-        "wexample/pseudocode": "^1.0.21",
+        "wexample/php-pseudocode": "^1.0.21",
         "wexample/symfony-helpers": "^1.0.27"
     },
     "require-dev": {
