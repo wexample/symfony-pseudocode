@@ -14,7 +14,7 @@
   "require": {
     "php": ">=7.4",
     "wexample/php-pseudocode": "1.0.62",
-    "wexample/symfony-helpers": "1.0.64"
+    "wexample/symfony-helpers": "1.0.66"
   },
   "require-dev": {
     "symfony/http-kernel": "^6.0",
