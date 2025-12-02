@@ -11,8 +11,7 @@ class CodeCommand extends AbstractPseudocodeGenerateCommand
     protected function execute(
         InputInterface $input,
         OutputInterface $output
-    ): int
-    {
+    ): int {
         $pseudocodeDir = $input->getArgument('pseudocode-dir');
 
         $output->writeln($pseudocodeDir);

@@ -12,19 +12,17 @@ use Wexample\SymfonyPseudocode\Processor\RepositoryProcessor;
 
 class PseudocodeService
 {
-
     protected EntityProcessor $entityProcessor;
     protected RepositoryProcessor $repositoryProcessor;
     /** @var AbstractProcessor[] */
     protected $processors = [];
-    
+
     protected SymfonyPseudocodeGenerator $pseudocodeGenerator;
     protected SymfonyCodeGenerator $codeGenerator;
 
     public function __construct(
         protected KernelInterface $kernel,
-    )
-    {
+    ) {
         $this->pseudocodeGenerator = new SymfonyPseudocodeGenerator();
         $this->codeGenerator = new SymfonyCodeGenerator();
 
@@ -51,20 +49,19 @@ class PseudocodeService
         string $pseudocodeDir,
         string $sourcePath,
         bool $recursive = false
-    ): array
-    {
+    ): array {
         // Ensure pseudocode directory ends with a slash
-        if (!str_ends_with($pseudocodeDir, '/')) {
+        if (! str_ends_with($pseudocodeDir, '/')) {
             $pseudocodeDir .= '/';
         }
-        
+
         $files = [];
-        
+
         // If source path is a file, process it directly
         if (is_file($sourcePath)) {
             return $this->processFile($sourcePath, $pseudocodeDir);
         }
-        
+
         // If source path is a directory, process it with processors
         if (is_dir($sourcePath)) {
             // Process with each processor
@@ -81,10 +78,10 @@ class PseudocodeService
 
         return $files;
     }
-    
+
     /**
      * Process a single file
-     * 
+     *
      * @param string $filePath Path to the file
      * @param string $pseudocodeDir Directory where to generate pseudocode
      * @return string[] List containing the processed file
@@ -93,30 +90,30 @@ class PseudocodeService
     {
         // Get the project root directory to determine relative paths
         $projectDir = $this->kernel->getProjectDir();
-        
+
         // Make sure the file path is absolute
-        if (!str_starts_with($filePath, '/')) {
+        if (! str_starts_with($filePath, '/')) {
             $filePath = $projectDir . '/' . $filePath;
         }
-        
+
         // Only process PHP files
-        if (!str_ends_with($filePath, '.php')) {
+        if (! str_ends_with($filePath, '.php')) {
             return [];
         }
-        
+
         // Generate pseudocode for the file
         $outputFile = $this->pseudocodeGenerator->generateFromFileAndSave(
             new \SplFileInfo($filePath),
             $projectDir . '/',
             $pseudocodeDir
         );
-        
+
         return [$outputFile];
     }
-    
+
     /**
      * Process a directory using a specific processor
-     * 
+     *
      * @param string $sourceDir Directory to process
      * @param string $pseudocodeDir Directory where to generate pseudocode
      * @param AbstractProcessor $processor Processor to use
@@ -128,19 +125,18 @@ class PseudocodeService
         string $pseudocodeDir,
         AbstractProcessor $processor,
         bool $recursive = false
-    ): array
-    {
+    ): array {
         // Create a finder to locate files
         $finder = new Finder();
         $finder->files()
             ->in($sourceDir)
             ->name('*.php');
-        
+
         // Set recursion option
-        if (!$recursive) {
+        if (! $recursive) {
             $finder->depth('== 0');
         }
-        
+
         $files = [];
         foreach ($finder as $file) {
             // Generate pseudocode for each file
@@ -149,12 +145,12 @@ class PseudocodeService
                 $this->kernel->getProjectDir() . '/',
                 $pseudocodeDir
             );
-            
+
             if ($outputFile) {
                 $files[] = $outputFile;
             }
         }
-        
+
         return $files;
     }
 }

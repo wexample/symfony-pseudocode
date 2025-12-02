@@ -18,16 +18,15 @@ class PseudocodeCommand extends AbstractPseudocodeGenerateCommand
     public function __construct(
         protected BundleService $bundleService,
         protected KernelInterface $kernel
-    )
-    {
+    ) {
         parent::__construct($bundleService);
         $this->pseudocodeService = new PseudocodeService($kernel);
     }
-    
+
     protected function configure(): void
     {
         parent::configure();
-        
+
         $this
             ->addArgument(
                 'source-path',
@@ -46,31 +45,30 @@ class PseudocodeCommand extends AbstractPseudocodeGenerateCommand
     protected function execute(
         InputInterface $input,
         OutputInterface $output
-    ): int
-    {
+    ): int {
         $projectDir = $this->kernel->getProjectDir();
         $sourcePath = $input->getArgument('source-path');
         $pseudocodeDir = $input->getArgument('pseudocode-dir');
         $recursive = $input->getOption('recursive');
-        
+
         // Make sure paths are absolute
         $sourcePath = $this->resolvePath($projectDir, $sourcePath);
         $pseudocodeDir = $this->resolvePath($projectDir, $pseudocodeDir);
-        
+
         $output->writeln(sprintf('Processing source: %s', $sourcePath));
         $output->writeln(sprintf('Output directory: %s', $pseudocodeDir));
-        
+
         $files = $this->pseudocodeService->process(
             $pseudocodeDir,
             $sourcePath,
             $recursive
         );
-        
+
         $output->writeln(sprintf('Processed %d files', count($files)));
 
         return Command::SUCCESS;
     }
-    
+
     /**
      * Resolve a path to an absolute path
      */
@@ -80,7 +78,7 @@ class PseudocodeCommand extends AbstractPseudocodeGenerateCommand
         if (strpos($path, '/') === 0) {
             return $path;
         }
-        
+
         // Otherwise, make it absolute
         return $baseDir . '/' . $path;
     }

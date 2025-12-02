@@ -11,8 +11,7 @@ abstract class AbstractProcessor
     public function __construct(
         protected SymfonyPseudocodeGenerator $pseudocodeGenerator,
         protected SymfonyCodeGenerator $codeGenerator,
-    )
-    {
+    ) {
     }
 
     abstract protected function getSourceSubDirectory(): string;
@@ -30,8 +29,7 @@ abstract class AbstractProcessor
     public function process(
         string $codeDir,
         string $pseudocodeRootDir
-    ): array
-    {
+    ): array {
         $sourceDir = $codeDir . '/' . $this->getSourceSubDirectory();
 
         $finder = new Finder();
