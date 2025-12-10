@@ -1,6 +1,6 @@
 # wexample/symfony-pseudocode
 
-Version: 1.0.59
+Version: 1.0.60
 
 A basic PHP package
 
@@ -113,7 +113,7 @@ Free to use in both personal and commercial projects.
 
 ## Integration in the Suite
 
-This package is part of the **Wexample Suite** — a collection of high-quality Python packages designed to work seamlessly together.
+This package is part of the Wexample Suite — a collection of high-quality, modular tools designed to work seamlessly together across multiple languages and environments.
 
 ### Related Packages
 
@@ -130,8 +130,8 @@ Refer to each package's documentation for specific version compatibility require
 ## Dependencies
 
 - php: >=7.4
-- wexample/php-pseudocode: 1.0.63
-- wexample/symfony-helpers: 1.0.69
+- wexample/php-pseudocode: ==1.0.64
+- wexample/symfony-helpers: ==1.0.70
 
 
 # About us
