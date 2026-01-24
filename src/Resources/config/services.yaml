@@ -5,6 +5,7 @@ services:
         public: false
         bind:
             $exportPaths: '%wexample_symfony_pseudocode.paths%'
+            $defaultOutputDir: '%wexample_symfony_pseudocode.output_dir%'
 
     Wexample\SymfonyPseudocode\:
         resource: '../../{Command,Service}'

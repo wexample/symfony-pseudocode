@@ -16,7 +16,8 @@ class PseudocodeCommand extends AbstractPseudocodeGenerateCommand
     public function __construct(
         protected BundleService $bundleService,
         protected KernelInterface $kernel,
-        protected PseudocodeService $pseudocodeService
+        protected PseudocodeService $pseudocodeService,
+        protected string $defaultOutputDir
     ) {
         parent::__construct($bundleService);
     }
@@ -46,7 +47,9 @@ class PseudocodeCommand extends AbstractPseudocodeGenerateCommand
     ): int {
         $projectDir = $this->kernel->getProjectDir();
         $sourcePath = $input->getArgument('source-path');
-        $pseudocodeDir = $input->getArgument('pseudocode-dir');
+        $pseudocodeDir = $input->getArgument('pseudocode-dir')
+            ?? $this->defaultOutputDir
+            ?? 'pseudocode';
         $recursive = $input->getOption('recursive');
 
         // Make sure paths are absolute

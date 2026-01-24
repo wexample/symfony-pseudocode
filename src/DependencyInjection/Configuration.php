@@ -14,6 +14,10 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->scalarNode('output_dir')
+                    ->defaultValue('pseudocode')
+                    ->cannotBeEmpty()
+                ->end()
                 ->arrayNode('paths')
                     ->scalarPrototype()->cannotBeEmpty()->end()
                     ->defaultValue([])

@@ -18,6 +18,10 @@ class WexampleSymfonyPseudocodeExtension extends AbstractWexampleSymfonyExtensio
             'wexample_symfony_pseudocode.paths',
             $config['paths']
         );
+        $container->setParameter(
+            'wexample_symfony_pseudocode.output_dir',
+            $config['output_dir']
+        );
 
         $this->loadConfig(
             __DIR__,
