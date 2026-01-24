@@ -19,8 +19,7 @@ abstract class AbstractPseudocodeGenerateCommand extends AbstractBundleCommand
             ->addArgument(
                 'pseudocode-dir',
                 InputArgument::OPTIONAL,
-                'Directory where to generate the Symfony project',
-                'pseudocode'
+                'Directory where to generate the Symfony project'
             );
     }
 

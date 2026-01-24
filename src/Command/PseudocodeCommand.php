@@ -13,14 +13,13 @@ use Wexample\SymfonyPseudocode\Service\PseudocodeService;
 
 class PseudocodeCommand extends AbstractPseudocodeGenerateCommand
 {
-    protected PseudocodeService $pseudocodeService;
-
     public function __construct(
         protected BundleService $bundleService,
-        protected KernelInterface $kernel
+        protected KernelInterface $kernel,
+        protected PseudocodeService $pseudocodeService,
+        protected string $defaultOutputDir
     ) {
         parent::__construct($bundleService);
-        $this->pseudocodeService = new PseudocodeService($kernel);
     }
 
     protected function configure(): void
@@ -32,7 +31,7 @@ class PseudocodeCommand extends AbstractPseudocodeGenerateCommand
                 'source-path',
                 InputArgument::OPTIONAL,
                 'Specific file or directory to process (relative to project root)',
-                'src'
+                null
             )
             ->addOption(
                 'recursive',
@@ -48,21 +47,42 @@ class PseudocodeCommand extends AbstractPseudocodeGenerateCommand
     ): int {
         $projectDir = $this->kernel->getProjectDir();
         $sourcePath = $input->getArgument('source-path');
-        $pseudocodeDir = $input->getArgument('pseudocode-dir');
+        $pseudocodeDir = $input->getArgument('pseudocode-dir')
+            ?? $this->defaultOutputDir
+            ?? 'pseudocode';
         $recursive = $input->getOption('recursive');
 
         // Make sure paths are absolute
-        $sourcePath = $this->resolvePath($projectDir, $sourcePath);
         $pseudocodeDir = $this->resolvePath($projectDir, $pseudocodeDir);
 
-        $output->writeln(sprintf('Processing source: %s', $sourcePath));
         $output->writeln(sprintf('Output directory: %s', $pseudocodeDir));
 
-        $files = $this->pseudocodeService->process(
-            $pseudocodeDir,
-            $sourcePath,
-            $recursive
-        );
+        $files = [];
+        $exportPaths = $this->pseudocodeService->getExportPaths();
+
+        if ($sourcePath === null && ! empty($exportPaths)) {
+            foreach ($exportPaths as $path) {
+                $resolvedPath = $this->resolvePath($projectDir, $path);
+                $output->writeln(sprintf('Processing source: %s', $resolvedPath));
+                $files = array_merge(
+                    $files,
+                    $this->pseudocodeService->process(
+                        $pseudocodeDir,
+                        $resolvedPath,
+                        $recursive
+                    )
+                );
+            }
+        } else {
+            $sourcePath = $sourcePath ?? 'src';
+            $sourcePath = $this->resolvePath($projectDir, $sourcePath);
+            $output->writeln(sprintf('Processing source: %s', $sourcePath));
+            $files = $this->pseudocodeService->process(
+                $pseudocodeDir,
+                $sourcePath,
+                $recursive
+            );
+        }
 
         $output->writeln(sprintf('Processed %d files', count($files)));
 

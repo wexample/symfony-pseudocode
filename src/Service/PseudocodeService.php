@@ -16,13 +16,16 @@ class PseudocodeService
     protected RepositoryProcessor $repositoryProcessor;
     /** @var AbstractProcessor[] */
     protected $processors = [];
+    protected array $exportPaths = [];
 
     protected SymfonyPseudocodeGenerator $pseudocodeGenerator;
     protected SymfonyCodeGenerator $codeGenerator;
 
     public function __construct(
         protected KernelInterface $kernel,
+        array $exportPaths = [],
     ) {
+        $this->exportPaths = array_values(array_filter($exportPaths));
         $this->pseudocodeGenerator = new SymfonyPseudocodeGenerator();
         $this->codeGenerator = new SymfonyCodeGenerator();
 
@@ -37,6 +40,14 @@ class PseudocodeService
                 $this->codeGenerator,
             );
         }
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getExportPaths(): array
+    {
+        return $this->exportPaths;
     }
 
     /**
