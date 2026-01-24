@@ -11,6 +11,14 @@ class WexampleSymfonyPseudocodeExtension extends AbstractWexampleSymfonyExtensio
         array $configs,
         ContainerBuilder $container
     ): void {
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $container->setParameter(
+            'wexample_symfony_pseudocode.paths',
+            $config['paths']
+        );
+
         $this->loadConfig(
             __DIR__,
             $container

@@ -3,7 +3,9 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+        bind:
+            $exportPaths: '%wexample_symfony_pseudocode.paths%'
 
     Wexample\SymfonyPseudocode\:
-        resource: '../../{Command}'
+        resource: '../../{Command,Service}'
         tags: ['controller.service_arguments']
