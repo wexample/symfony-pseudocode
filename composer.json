@@ -1,30 +1,30 @@
 {
-    "name": "wexample/symfony-pseudocode",
-    "description": "A basic PHP package",
-    "type": "library",
-    "license": "MIT",
-    "version": "1.0.76",
-    "authors": [
-        {
-            "name": "Wexample",
-            "email": "contact@wexample.com"
-        }
-    ],
-    "minimum-stability": "stable",
-    "require": {
-        "php": ">=7.4",
-        "wexample/php-pseudocode": "*",
-        "wexample/symfony-helpers": "*"
-    },
-    "require-dev": {
-        "symfony/http-kernel": "^6.0",
-        "symfony/console": "^6.0",
-        "symfony/framework-bundle": "^6.0",
-        "phpunit/phpunit": "^9.5"
-    },
-    "autoload": {
-        "psr-4": {
-            "Wexample\\SymfonyPseudocode\\": "src/"
-        }
+  "name": "wexample/symfony-pseudocode",
+  "description": "A basic PHP package",
+  "type": "library",
+  "license": "MIT",
+  "version": "1.0.77",
+  "authors": [
+    {
+      "name": "Wexample",
+      "email": "contact@wexample.com"
     }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=7.4",
+    "wexample/php-pseudocode": "1.0.82",
+    "wexample/symfony-helpers": "1.0.89"
+  },
+  "require-dev": {
+    "symfony/http-kernel": "^6.0",
+    "symfony/console": "^6.0",
+    "symfony/framework-bundle": "^6.0",
+    "phpunit/phpunit": "^9.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Wexample\\SymfonyPseudocode\\": "src/"
+    }
+  }
 }
