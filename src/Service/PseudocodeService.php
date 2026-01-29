@@ -4,6 +4,8 @@ namespace Wexample\SymfonyPseudocode\Service;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Wexample\Pseudocode\Parser\ClassIndex;
+use Wexample\Pseudocode\Parser\ParserContext;
 use Wexample\SymfonyPseudocode\Generator\SymfonyCodeGenerator;
 use Wexample\SymfonyPseudocode\Generator\SymfonyPseudocodeGenerator;
 use Wexample\SymfonyPseudocode\Processor\AbstractProcessor;
@@ -16,17 +18,19 @@ class PseudocodeService
     protected RepositoryProcessor $repositoryProcessor;
     /** @var AbstractProcessor[] */
     protected $processors = [];
-    protected array $exportPaths = [];
+    protected ?ClassIndex $classIndex = null;
 
     protected SymfonyPseudocodeGenerator $pseudocodeGenerator;
     protected SymfonyCodeGenerator $codeGenerator;
 
     public function __construct(
         protected KernelInterface $kernel,
-        array $exportPaths = [],
     ) {
-        $this->exportPaths = array_values(array_filter($exportPaths));
         $this->pseudocodeGenerator = new SymfonyPseudocodeGenerator();
+        $this->classIndex = $this->buildClassIndex();
+        $this->pseudocodeGenerator->setParserContext(
+            new ParserContext($this->classIndex)
+        );
         $this->codeGenerator = new SymfonyCodeGenerator();
 
         $processors = [
@@ -42,19 +46,39 @@ class PseudocodeService
         }
     }
 
-    /**
-     * @return string[]
-     */
-    public function getExportPaths(): array
+    protected function buildClassIndex(): ClassIndex
     {
-        return $this->exportPaths;
+        $index = new ClassIndex();
+        $projectDir = $this->kernel->getProjectDir();
+        $sourceDir = $projectDir . '/src';
+        if (is_dir($sourceDir)) {
+            $finder = new Finder();
+            $finder->files()
+                ->in($sourceDir)
+                ->name('*.php');
+
+            foreach ($finder as $file) {
+                $index->addFile($file->getPathname());
+            }
+        }
+
+        return $index;
+    }
+
+    protected function resolvePath(string $projectDir, string $path): string
+    {
+        if (str_starts_with($path, '/')) {
+            return $path;
+        }
+
+        return rtrim($projectDir, '/') . '/' . ltrim($path, '/');
     }
 
     /**
      * @param string $pseudocodeDir Directory where to generate pseudocode
      * @param string $sourcePath Path to a specific file or directory to process
      * @param bool $recursive Process directories recursively
-     * @return string[] List of processed files
+     * @return array{scanned: int, generated: string[]}
      */
     public function process(
         string $pseudocodeDir,
@@ -67,6 +91,7 @@ class PseudocodeService
         }
 
         $files = [];
+        $scanned = 0;
 
         // If source path is a file, process it directly
         if (is_file($sourcePath)) {
@@ -77,17 +102,20 @@ class PseudocodeService
         if (is_dir($sourcePath)) {
             // Process with each processor
             foreach ($this->processors as $processor) {
-                $processorFiles = $this->processDirectory(
+                $processorResult = $processor->process(
                     $sourcePath,
                     $pseudocodeDir,
-                    $processor,
                     $recursive
                 );
-                $files = array_merge($files, $processorFiles);
+                $scanned += $processorResult['scanned'];
+                $files = array_merge($files, $processorResult['generated']);
             }
         }
 
-        return $files;
+        return [
+            'scanned' => $scanned,
+            'generated' => $files,
+        ];
     }
 
     /**
@@ -95,7 +123,7 @@ class PseudocodeService
      *
      * @param string $filePath Path to the file
      * @param string $pseudocodeDir Directory where to generate pseudocode
-     * @return string[] List containing the processed file
+     * @return array{scanned: int, generated: string[]}
      */
     protected function processFile(string $filePath, string $pseudocodeDir): array
     {
@@ -109,7 +137,10 @@ class PseudocodeService
 
         // Only process PHP files
         if (! str_ends_with($filePath, '.php')) {
-            return [];
+            return [
+                'scanned' => 0,
+                'generated' => [],
+            ];
         }
 
         // Generate pseudocode for the file
@@ -119,49 +150,11 @@ class PseudocodeService
             $pseudocodeDir
         );
 
-        return [$outputFile];
+        return [
+            'scanned' => 1,
+            'generated' => $outputFile ? [$outputFile] : [],
+        ];
     }
 
-    /**
-     * Process a directory using a specific processor
-     *
-     * @param string $sourceDir Directory to process
-     * @param string $pseudocodeDir Directory where to generate pseudocode
-     * @param AbstractProcessor $processor Processor to use
-     * @param bool $recursive Process directories recursively
-     * @return string[] List of processed files
-     */
-    protected function processDirectory(
-        string $sourceDir,
-        string $pseudocodeDir,
-        AbstractProcessor $processor,
-        bool $recursive = false
-    ): array {
-        // Create a finder to locate files
-        $finder = new Finder();
-        $finder->files()
-            ->in($sourceDir)
-            ->name('*.php');
-
-        // Set recursion option
-        if (! $recursive) {
-            $finder->depth('== 0');
-        }
-
-        $files = [];
-        foreach ($finder as $file) {
-            // Generate pseudocode for each file
-            $outputFile = $this->pseudocodeGenerator->generateFromFileAndSave(
-                $file,
-                $this->kernel->getProjectDir() . '/',
-                $pseudocodeDir
-            );
-
-            if ($outputFile) {
-                $files[] = $outputFile;
-            }
-        }
-
-        return $files;
-    }
+    // processDirectory removed: processors handle subdirectories and recursion
 }

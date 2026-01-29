@@ -57,34 +57,25 @@ class PseudocodeCommand extends AbstractPseudocodeGenerateCommand
 
         $output->writeln(sprintf('Output directory: %s', $pseudocodeDir));
 
-        $files = [];
-        $exportPaths = $this->pseudocodeService->getExportPaths();
+        $sourcePath = $sourcePath ?? 'src';
+        $sourcePath = $this->resolvePath($projectDir, $sourcePath);
+        $output->writeln(sprintf('Processing source: %s', $sourcePath));
+        $result = $this->pseudocodeService->process(
+            $pseudocodeDir,
+            $sourcePath,
+            $recursive
+        );
 
-        if ($sourcePath === null && ! empty($exportPaths)) {
-            foreach ($exportPaths as $path) {
-                $resolvedPath = $this->resolvePath($projectDir, $path);
-                $output->writeln(sprintf('Processing source: %s', $resolvedPath));
-                $files = array_merge(
-                    $files,
-                    $this->pseudocodeService->process(
-                        $pseudocodeDir,
-                        $resolvedPath,
-                        $recursive
-                    )
-                );
-            }
+        $output->writeln(sprintf('Scanned %d files', $result['scanned']));
+
+        if (empty($result['generated'])) {
+            $output->writeln('Generated 0 pseudocode files');
         } else {
-            $sourcePath = $sourcePath ?? 'src';
-            $sourcePath = $this->resolvePath($projectDir, $sourcePath);
-            $output->writeln(sprintf('Processing source: %s', $sourcePath));
-            $files = $this->pseudocodeService->process(
-                $pseudocodeDir,
-                $sourcePath,
-                $recursive
-            );
+            $output->writeln(sprintf('Generated %d pseudocode files:', count($result['generated'])));
+            foreach ($result['generated'] as $file) {
+                $output->writeln(' - ' . $file);
+            }
         }
-
-        $output->writeln(sprintf('Processed %d files', count($files)));
 
         return Command::SUCCESS;
     }
