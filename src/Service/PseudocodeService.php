@@ -2,10 +2,9 @@
 
 namespace Wexample\SymfonyPseudocode\Service;
 
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Wexample\Pseudocode\Parser\ClassIndex;
 use Wexample\Pseudocode\Parser\ParserContext;
+use Wexample\Pseudocode\Resolver\ReflectionInheritanceResolver;
 use Wexample\SymfonyPseudocode\Generator\SymfonyCodeGenerator;
 use Wexample\SymfonyPseudocode\Generator\SymfonyPseudocodeGenerator;
 use Wexample\SymfonyPseudocode\Processor\AbstractProcessor;
@@ -18,7 +17,6 @@ class PseudocodeService
     protected RepositoryProcessor $repositoryProcessor;
     /** @var AbstractProcessor[] */
     protected $processors = [];
-    protected ?ClassIndex $classIndex = null;
 
     protected SymfonyPseudocodeGenerator $pseudocodeGenerator;
     protected SymfonyCodeGenerator $codeGenerator;
@@ -27,9 +25,8 @@ class PseudocodeService
         protected KernelInterface $kernel,
     ) {
         $this->pseudocodeGenerator = new SymfonyPseudocodeGenerator();
-        $this->classIndex = $this->buildClassIndex();
         $this->pseudocodeGenerator->setParserContext(
-            new ParserContext($this->classIndex)
+            new ParserContext(new ReflectionInheritanceResolver())
         );
         $this->codeGenerator = new SymfonyCodeGenerator();
 
@@ -44,25 +41,6 @@ class PseudocodeService
                 $this->codeGenerator,
             );
         }
-    }
-
-    protected function buildClassIndex(): ClassIndex
-    {
-        $index = new ClassIndex();
-        $projectDir = $this->kernel->getProjectDir();
-        $sourceDir = $projectDir . '/src';
-        if (is_dir($sourceDir)) {
-            $finder = new Finder();
-            $finder->files()
-                ->in($sourceDir)
-                ->name('*.php');
-
-            foreach ($finder as $file) {
-                $index->addFile($file->getPathname());
-            }
-        }
-
-        return $index;
     }
 
     protected function resolvePath(string $projectDir, string $path): string
