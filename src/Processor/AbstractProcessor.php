@@ -24,11 +24,13 @@ abstract class AbstractProcessor
     /**
      * @param string $codeDir Directory containing the source code
      * @param string $pseudocodeRootDir Directory where to generate pseudocode
-     * @return string[]
+     * @param bool $recursive Process directories recursively
+     * @return array{scanned: int, generated: string[]}
      */
     public function process(
         string $codeDir,
-        string $pseudocodeRootDir
+        string $pseudocodeRootDir,
+        bool $recursive = false
     ): array {
         $sourceDir = $codeDir . '/' . $this->getSourceSubDirectory();
 
@@ -36,17 +38,28 @@ abstract class AbstractProcessor
         $finder->files()
             ->in($sourceDir)
             ->name($this->getFilePattern());
+        if (! $recursive) {
+            $finder->depth('== 0');
+        }
 
         $files = [];
+        $scanned = 0;
         foreach ($finder as $file) {
-            $files[] = $this->pseudocodeGenerator->generateFromFileAndSave(
+            $scanned++;
+            $outputFile = $this->pseudocodeGenerator->generateFromFileAndSave(
                 $file,
                 $codeDir . '/',
                 $pseudocodeRootDir,
             );
+            if ($outputFile) {
+                $files[] = $outputFile;
+            }
         }
 
-        return $files;
+        return [
+            'scanned' => $scanned,
+            'generated' => $files,
+        ];
     }
 
     abstract protected function getProcessorName(): string;

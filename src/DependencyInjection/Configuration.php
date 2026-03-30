@@ -18,10 +18,6 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue('pseudocode')
                     ->cannotBeEmpty()
                 ->end()
-                ->arrayNode('paths')
-                    ->scalarPrototype()->cannotBeEmpty()->end()
-                    ->defaultValue([])
-                ->end()
             ->end();
 
         return $treeBuilder;

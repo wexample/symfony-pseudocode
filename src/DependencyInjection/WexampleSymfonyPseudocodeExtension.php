@@ -15,10 +15,6 @@ class WexampleSymfonyPseudocodeExtension extends AbstractWexampleSymfonyExtensio
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter(
-            'wexample_symfony_pseudocode.paths',
-            $config['paths']
-        );
-        $container->setParameter(
             'wexample_symfony_pseudocode.output_dir',
             $config['output_dir']
         );
