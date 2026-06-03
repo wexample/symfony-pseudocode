@@ -1,6 +1,6 @@
 # symfony_pseudocode
 
-Version: 1.0.82
+Version: 1.0.83
 
 A basic PHP package
 
@@ -28,8 +28,8 @@ Visit the [Wexample Suite documentation](https://docs.wexample.com) for the comp
 ## Dependencies
 
 - php: >=7.4
-- wexample/php-pseudocode: >=2.0.0
-- wexample/symfony-helpers: >=1.0.93
+- wexample/php-pseudocode: *
+- wexample/symfony-helpers: >=2.0.0
 
 ## Versioning & Compatibility Policy
 
