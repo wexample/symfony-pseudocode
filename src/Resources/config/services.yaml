@@ -5,6 +5,7 @@ services:
         public: false
         bind:
             $defaultOutputDir: '%wexample_symfony_pseudocode.output_dir%'
+            $additionalSources: '%wexample_symfony_pseudocode.additional_sources%'
 
     Wexample\SymfonyPseudocode\:
         resource: '../../{Command,Service}'

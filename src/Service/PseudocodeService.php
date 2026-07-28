@@ -23,6 +23,7 @@ class PseudocodeService
 
     public function __construct(
         protected KernelInterface $kernel,
+        protected array $additionalSources = [],
     ) {
         $this->pseudocodeGenerator = new SymfonyPseudocodeGenerator();
         $this->pseudocodeGenerator->setParserContext(
@@ -77,11 +78,19 @@ class PseudocodeService
         }
 
         // If source path is a directory, process it with processors
-        if (is_dir($sourcePath)) {
-            // Process with each processor
+        $sourcePaths = is_dir($sourcePath) ? [$sourcePath] : [];
+
+        foreach ($this->additionalSources as $additionalSource) {
+            $resolved = $this->resolvePath($this->kernel->getProjectDir(), $additionalSource);
+            if (is_dir($resolved)) {
+                $sourcePaths[] = $resolved;
+            }
+        }
+
+        foreach ($sourcePaths as $path) {
             foreach ($this->processors as $processor) {
                 $processorResult = $processor->process(
-                    $sourcePath,
+                    $path,
                     $pseudocodeDir,
                     $recursive
                 );
