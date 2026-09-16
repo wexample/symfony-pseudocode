@@ -34,6 +34,17 @@ abstract class AbstractProcessor
     ): array {
         $sourceDir = $codeDir . '/' . $this->getSourceSubDirectory();
 
+        // A package holding entities and no repositories is not an error, it is
+        // a package whose entities are not persisted. Finder throws on a missing
+        // directory, so the absence is answered here rather than by the caller
+        // having to create an empty folder to be scanned.
+        if (! is_dir($sourceDir)) {
+            return [
+                'scanned' => 0,
+                'generated' => [],
+            ];
+        }
+
         $finder = new Finder();
         $finder->files()
             ->in($sourceDir)
