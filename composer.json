@@ -20,7 +20,7 @@
     "symfony/http-kernel": "^6.0",
     "symfony/console": "^6.0",
     "symfony/framework-bundle": "^6.0",
-    "phpunit/phpunit": "^9.5"
+    "phpunit/phpunit": "^13"
   },
   "autoload": {
     "psr-4": {

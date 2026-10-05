@@ -30,7 +30,7 @@ class PseudocodeServiceTest extends TestCase
         (new Filesystem())->mkdir($this->tempTestDir);
 
         // Mock kernel - we don't need getProjectDir anymore but service still requires it
-        $kernel = $this->createMock(KernelInterface::class);
+        $kernel = $this->createStub(KernelInterface::class);
         $this->pseudocodeService = new PseudocodeService($kernel);
     }
 
