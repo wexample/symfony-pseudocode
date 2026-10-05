@@ -5,6 +5,7 @@ items:
     properties:
       - name: id
         type: int
+        nullable: true
         default: null
         description: 'The identifier of the entity.'
         # TODO extract data from Doctrine.
@@ -16,4 +17,5 @@ items:
       - name: getId
         description: 'Returns the unique id of the entity instance.'
         type: method
-        return: int
+        return:
+          type: int

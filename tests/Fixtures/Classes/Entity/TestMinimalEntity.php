@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * A Symfony entity that only contains an id in a flat notation
  */
+#[\Wexample\Pseudocode\Attribute\PseudocodeExport]
 #[ORM\Entity]
 class TestMinimalEntity
 {

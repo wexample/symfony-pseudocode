@@ -9,6 +9,7 @@ use Wexample\SymfonyPseudocode\Tests\Fixtures\Entity\TestMinimalEntity;
 /**
  * A basic Symfony repository
  */
+#[\Wexample\Pseudocode\Attribute\PseudocodeExport]
 class TestMinimalEntityRepository extends ServiceEntityRepository
 {
     /**

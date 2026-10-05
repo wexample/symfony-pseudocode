@@ -44,7 +44,7 @@ class PseudocodeServiceTest extends TestCase
     public function testEntityConversion(): void
     {
         // Process the test entities and repositories
-        $files = $this->pseudocodeService->process($this->tempTestDir, $this->sourceDir);
+        $files = $this->pseudocodeService->process($this->tempTestDir, $this->sourceDir)['generated'];
 
         $this->assertNotEmpty($files, 'The service should have produced files.');
 
