@@ -1,6 +1,6 @@
 # symfony_pseudocode
 
-Version: 3.0.7
+Version: 3.0.8
 
 `wexample/symfony-pseudocode` is a Symfony bundle that turns a project's PHP classes into YAML pseudocode: `php bin/console pseudocode:generate:pseudocode src` walks the `Entity` and `Repository` sub-directories of the given source and writes one `.yml` file per class, listing its properties and methods with their types and descriptions. It wraps the framework-agnostic `wexample/php-pseudocode` generator in Symfony plumbing — a bundle, a configurable `output_dir`, and `additional_sources` directories scanned alongside the application's own code. It is aimed at developers who need a compact, machine-readable summary of a Symfony codebase rather than the code itself.
 
@@ -136,8 +136,8 @@ Visit the [Wexample Suite documentation](https://docs.wexample.com) for the comp
 ## Dependencies
 
 - php: >=8.5
-- wexample/php-pseudocode: >=2.1.2
-- wexample/symfony-helpers: >=14.0.0
+- wexample/php-pseudocode: >=2.2.0
+- wexample/symfony-helpers: >=15.0.0
 
 ## Versioning & Compatibility Policy
 
