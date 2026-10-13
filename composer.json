@@ -3,7 +3,7 @@
   "description": "A basic PHP package",
   "type": "library",
   "license": "MIT",
-  "version": "3.0.10",
+  "version": "3.0.11",
   "authors": [
     {
       "name": "Wexample",
