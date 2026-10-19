@@ -13,17 +13,17 @@ use Wexample\SymfonyPseudocode\Processor\RepositoryProcessor;
 
 class PseudocodeService
 {
-    protected EntityProcessor $entityProcessor;
-    protected RepositoryProcessor $repositoryProcessor;
+    protected readonly EntityProcessor $entityProcessor;
+    protected readonly RepositoryProcessor $repositoryProcessor;
     /** @var AbstractProcessor[] */
-    protected $processors = [];
+    protected readonly array $processors;
 
-    protected SymfonyPseudocodeGenerator $pseudocodeGenerator;
-    protected SymfonyCodeGenerator $codeGenerator;
+    protected readonly SymfonyPseudocodeGenerator $pseudocodeGenerator;
+    protected readonly SymfonyCodeGenerator $codeGenerator;
 
     public function __construct(
-        protected KernelInterface $kernel,
-        protected array $additionalSources = [],
+        protected readonly KernelInterface $kernel,
+        protected readonly array $additionalSources = [],
     ) {
         $this->pseudocodeGenerator = new SymfonyPseudocodeGenerator();
         $this->pseudocodeGenerator->setParserContext(
@@ -36,12 +36,15 @@ class PseudocodeService
             RepositoryProcessor::class,
         ];
 
+        $byClass = [];
         foreach ($processors as $processor) {
-            $this->processors[$processor] = new $processor(
+            $byClass[$processor] = new $processor(
                 $this->pseudocodeGenerator,
                 $this->codeGenerator,
             );
         }
+
+        $this->processors = $byClass;
     }
 
     protected function resolvePath(string $projectDir, string $path): string
