@@ -1,6 +1,6 @@
 # symfony_pseudocode
 
-Version: 3.0.11
+Version: 4.0.0
 
 `wexample/symfony-pseudocode` is a Symfony bundle that turns a project's PHP classes into YAML pseudocode: `php bin/console pseudocode:generate:pseudocode src` walks the `Entity` and `Repository` sub-directories of the given source and writes one `.yml` file per class, listing its properties and methods with their types and descriptions. It wraps the framework-agnostic `wexample/php-pseudocode` generator in Symfony plumbing — a bundle, a configurable `output_dir`, and `additional_sources` directories scanned alongside the application's own code. It is aimed at developers who need a compact, machine-readable summary of a Symfony codebase rather than the code itself.
 
@@ -131,13 +131,11 @@ This package is part of the Wexample Suite — a collection of high-quality, mod
 
 The suite includes packages for configuration management, file handling, prompts, and more. Each package can be used independently or as part of the integrated suite.
 
-Visit the [Wexample Suite documentation](https://docs.wexample.com) for the complete package ecosystem.
-
 ## Dependencies
 
 - php: >=8.5
 - wexample/php-pseudocode: >=2.2.0
-- wexample/symfony-helpers: >=16.0.0
+- wexample/symfony-helpers: >=17.0.0
 
 ## Versioning & Compatibility Policy
 
@@ -162,6 +160,8 @@ Free to use in both personal and commercial projects.
 This packages suite embodies this spirit. Trusted by professionals and enthusiasts alike, it delivers a consistent, high-quality foundation for modern development — open, elegant, and battle-tested. Its reputation is built on years of collaboration, refinement, and rigorous attention to detail, making it a natural choice for those who demand both robustness and beauty in their tools.
 
 Wexample cultivates a culture of mastery. Each package, each contribution carries the mark of a community that values precision, ethics, and innovation — a community proud to shape the future of digital craftsmanship.
+
+Built and maintained by [Romain Weeger](https://weeger.io).
 
 ## Migration Notes
 
