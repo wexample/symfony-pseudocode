@@ -1,6 +1,6 @@
 # symfony_pseudocode
 
-Version: 4.0.3
+Version: 4.0.4
 
 A basic PHP package
 
